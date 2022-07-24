@@ -1,0 +1,492 @@
+<template name="earningRateSettings">
+    <div class="modal fade" role="dialog" tabindex="1" id="earningRateSettingsModal" style="z-index:99999;">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable" role="document" style="max-width: 90vw;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4>Earning Rate List</h4>
+                    <!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button> -->
+                    <div class="dropdown float-right">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownEarningsButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right" style="min-width: 270px;" aria-labelledby="dropdownEarningsButton">
+                            <a class="dropdown-item closeModel pointer" data-toggle="modal" data-target="#ordinaryTimeEarningsModal">Ordinary Time Earnings</a>
+                            <a class="dropdown-item closeModel pointer" data-toggle="modal" data-target="#overtimeEarningsModal">Overtime Earnings</a>
+                            <a class="dropdown-item closeModel pointer" data-toggle="modal" data-target="#employmentTermninationPaymentsModal">Employment Termnination Payments</a>
+                            <a class="dropdown-item closeModel pointer" data-toggle="modal" data-target="#lumpSumEModal">Lump Sum E</a>
+                            <a class="dropdown-item closeModel pointer" data-toggle="modal" data-target="#bonusesCommissionsModal">Bonuses & Commissions</a>
+                            <a class="dropdown-item closeModel pointer" data-toggle="modal" data-target="#lumpSumWModal">Lump Sum W</a>
+                            <a class="dropdown-item closeModel pointer" data-toggle="modal" data-target="#directorsFeesModal">Directors Fees</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" style="width: 100%; display:none;" id="earningRateID" name="earningRateID" />
+                    <div class="card-body p-1 rounded">
+                        <div class="table-responsive">
+                            <table id="tblEarnings" style="width:100%" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr class="dnd-moved">
+                                        <th class="th colEarningsID hiddenColumn">Earning ID</th>
+                                        <th class="th colEarningsNames" style="width: 200px;">Earnings Name</th>
+                                        <th class="th colEarningsType" style="width: 80px;">Earnings Type</th>
+                                        <th class="th colEarningsDisplayName">Display name</th>
+                                        <th class="th colEarningsAmount" style="width: 80px;">Amount</th>
+                                        <th class="th colEarningsAccounts">Account</th>
+                                        <th class="th colEarningsAccountsID hiddenColumn">Account ID</th>
+                                        <th class="th colEarningsPAYG hiddenColumn">PAYG withholding</th>
+                                        <th class="th colEarningsSuperannuation hiddenColumn">Superannuation Guarantee Contribution</th>
+                                        <th class="th colEarningsReportableasW1 hiddenColumn">Reportable as W1</th>
+                                        <!-- <th class="th colDeleteEarnings" style="width: 20px!important;"></th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tbody>
+
+                                    </tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-light" data-dismiss="modal" type="button">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="ordinaryTimeEarningsModal" tabindex="-1" role="dialog" aria-labelledby="ordinaryTimeEarningsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ordinaryTimeEarningsLabel">Ordinary Time Earnings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtEarningsName">Earnings Name</label>
+                                <input type="text" class="form-control" id="edtEarningsName">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtDisplayName">Display Name <span style="font-weight: 200;">(optional)</span></label>
+                                <input type="text" class="form-control" id="edtDisplayName">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtRateType">Rate Type</label>
+                                <input type="search" class="form-control" id="edtRateType" name="edtRateType">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtExpenseAccount">Expense Account</label>
+                                <input type="search" class="form-control" id="edtExpenseAccount" name="edtExpenseAccount">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptPAYG" value="ordinaryTimeEarnings1">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptPAYG">Exempt from PAYG withholding</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptSuperannuation" value="ordinaryTimeEarnings2">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptSuperannuation">Exempt from Superannuation Guarantee Contribution</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptReportable" value="ordinaryTimeEarnings3">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptReportable">Reportable as W1 on Activity Statement</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success saveExemptReportable"><i class="fa fa-save" style="margin-right: 5px;"></i>Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" style="margin-right: 5px;"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="overtimeEarningsModal" tabindex="-1" role="dialog" aria-labelledby="overtimeEarningsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="overtimeEarningsLabel">Overtime Earnings</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtEarningsNameOvertime">Earnings Name</label>
+                                <input type="text" class="form-control" id="edtEarningsNameOvertime">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtDisplayNameOvertime">Display Name <span style="font-weight: 200;">(optional)</span></label>
+                                <input type="text" class="form-control" id="edtDisplayNameOvertime">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtRateTypeOvertime">Rate Type</label>
+                                <input type="search" class="form-control" id="edtRateTypeOvertime">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtExpenseAccountOvertime">Expense Account</label>
+                                <input type="search" class="form-control" id="edtExpenseAccountOvertime" name="edtExpenseAccountOvertime">
+                              
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptPAYGOvertime" value="Overtime1">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptPAYGOvertime">Exempt from PAYG withholding</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptSuperannuationOvertime" value="Overtime2">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptSuperannuationOvertime">Exempt from Superannuation Guarantee Contribution</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptReportableOvertime" value="Overtime3">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptReportableOvertime">Reportable as W1 on Activity Statement</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success saveExemptReportableOvertime"><i class="fa fa-save" style="margin-right: 5px;"></i>Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" style="margin-right: 5px;"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="employmentTermninationPaymentsModal" tabindex="-1" role="dialog" aria-labelledby="employmentTermninationPaymentsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="employmentTermninationPaymentsLabel">Employment Termnination Payments</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtEarningsNameTermnination">Earnings Name</label>
+                                <input type="text" class="form-control" id="edtEarningsNameTermnination">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtDisplayNameTermnination">Display Name <span style="font-weight: 200;">(optional)</span></label>
+                                <input type="text" class="form-control" id="edtDisplayNameTermnination">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtRateTypeTermnination">Rate Type</label>
+                                <input type="search" class="form-control" id="edtRateTypeTermnination">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtExpenseAccountTermnination">Expense Account</label>
+                                <input type="text" class="form-control" id="edtExpenseAccountTermnination" name="edtExpenseAccountTermnination">
+                               
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptPAYGTermnination" value="Termnination1">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptPAYGTermnination">Exempt from PAYG withholding</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptSuperannuationTermnination" value="Termnination2">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptSuperannuationTermnination">Exempt from Superannuation Guarantee Contribution</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptReportableTermnination" value="Termnination3">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptReportableTermnination">Reportable as W1 on Activity Statement</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success saveExemptReportableTermnination"><i class="fa fa-save" style="margin-right: 5px;"></i>Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" style="margin-right: 5px;"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="lumpSumEModal" tabindex="-1" role="dialog" aria-labelledby="lumpSumELabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lumpSumELabel">Lump Sum E</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtEarningsNameLumpSumE">Earnings Name</label>
+                                <input type="text" class="form-control" id="edtEarningsNameLumpSumE">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtDisplayNameLumpSumE">Display Name <span style="font-weight: 200;">(optional)</span></label>
+                                <input type="text" class="form-control" id="edtDisplayNameLumpSumE">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtRateTypeLumpSumE">Rate Type</label>
+                                <input type="search" class="form-control" id="edtRateTypeLumpSumE">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtExpenseAccountLumpSumE">Expense Account</label>
+                                <input type="text" class="form-control" id="edtExpenseAccountLumpSumE" name="edtExpenseAccountLumpSumE">
+                              
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptPAYGLumpSumE" value="LumpSumE1">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptPAYGLumpSumE">Exempt from PAYG withholding</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptSuperannuationLumpSumE" value="LumpSumE2">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptSuperannuationLumpSumE">Exempt from Superannuation Guarantee Contribution</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptReportableLumpSumE" value="LumpSumE3">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptReportableLumpSumE">Reportable as W1 on Activity Statement</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success saveExemptReportableLumpSumE"><i class="fa fa-save" style="margin-right: 5px;"></i>Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" style="margin-right: 5px;"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="bonusesCommissionsModal" tabindex="-1" role="dialog" aria-labelledby="bonusesCommissionsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="bonusesCommissionsLabel">Bonuses & Commissions</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-1">
+                            <span style="font-size: 14px;">For automatically calculating tax on back payments, commissions, bonuses, and similar payments.</span>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtEarningsNameBonusesCommissions">Earnings Name</label>
+                                <input type="text" class="form-control" id="edtEarningsNameBonusesCommissions">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtDisplayNameBonusesCommissions">Display Name <span style="font-weight: 200;">(optional)</span></label>
+                                <input type="text" class="form-control" id="edtDisplayNameBonusesCommissions">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtRateTypeBonusesCommissions">Rate Type</label>
+                                <input type="search" class="form-control" id="edtRateTypeBonusesCommissions">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtExpenseAccountBonusesCommissions">Expense Account</label>
+                                <input type="text" class="form-control" id="edtExpenseAccountBonusesCommissions" name="edtExpenseAccountBonusesCommissions">
+                            
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptPAYGBonusesCommissions" value="bonusesCommissions1" disabled>
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptPAYGBonusesCommissions">Exempt from PAYG withholding</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptSuperannuationBonusesCommissions" value="bonusesCommissions2">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptSuperannuationBonusesCommissions">Exempt from Superannuation Guarantee Contribution</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptReportableBonusesCommissions" value="bonusesCommissions3" checked disabled>
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptReportableBonusesCommissions">Reportable as W1 on Activity Statement</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success saveSuperannuationBonusesCommissions"><i class="fa fa-save" style="margin-right: 5px;"></i>Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" style="margin-right: 5px;"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="lumpSumWModal" tabindex="-1" role="dialog" aria-labelledby="lumpSumWLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lumpSumWLabel">Lump Sum W</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-1">
+                            <span style="font-size: 14px;">Payments made for return to work amounts given to employees.</span>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtEarningsNameLumpSumW">Earnings Name</label>
+                                <input type="text" class="form-control" id="edtEarningsNameLumpSumW">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtDisplayNameLumpSumW">Display Name <span style="font-weight: 200;">(optional)</span></label>
+                                <input type="text" class="form-control" id="edtDisplayNameLumpSumW">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtRateTypeLumpSumW">Rate Type</label>
+                                <input type="search" class="form-control" id="edtRateTypeLumpSumW">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtExpenseAccountLumpSumW">Expense Account</label>
+                                <input type="text" class="form-control" id="edtExpenseAccountLumpSumW" name="edtExpenseAccountLumpSumW">
+                              
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptPAYGLumpSumW" value="lumpSumW1" disabled>
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptPAYGLumpSumW">Exempt from PAYG withholding</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptSuperannuationLumpSumW" value="lumpSumW2">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptSuperannuationLumpSumW">Exempt from Superannuation Guarantee Contribution</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptReportableLumpSumW" value="lumpSumW3" checked disabled>
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptReportableLumpSumW">Reportable as W1 on Activity Statement</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success saveLumpSumW"><i class="fa fa-save" style="margin-right: 5px;"></i>Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" style="margin-right: 5px;"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="directorsFeesModal" tabindex="-1" role="dialog" aria-labelledby="directorsFeesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="directorsFeesLabel">Directors Fees</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-12 mb-1">
+                            <span style="font-size: 14px;">Travelling costs, costs associated with attending meetings and other expenses incurred in the position of a company director.</span>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtEarningsNameDirectorsFees">Earnings Name</label>
+                                <input type="text" class="form-control" id="edtEarningsNameDirectorsFees">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtDisplayNameDirectorsFees">Display Name <span style="font-weight: 200;">(optional)</span></label>
+                                <input type="text" class="form-control" id="edtDisplayNameDirectorsFees">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtRateTypeDirectorsFees">Rate Type</label>
+                                <input type="search" class="form-control" id="edtRateTypeDirectorsFees">
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <label for="edtExpenseAccountDirectorsFees">Expense Account</label>
+                                <input type="text" class="form-control" id="edtExpenseAccountDirectorsFees" name="edtExpenseAccountDirectorsFees">
+                            
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptPAYGDirectorsFees" value="DirectorsFees1" disabled>
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptPAYGDirectorsFees">Exempt from PAYG withholding</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptSuperannuationDirectorsFees" value="DirectorsFees2">
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptSuperannuationDirectorsFees">Exempt from Superannuation Guarantee Contribution</label>
+                            </div>
+                            <div class="custom-control custom-switch pointer">
+                                <input class="custom-control-input chkBox pointer" type="checkbox" id="formCheck-ExemptReportableDirectorsFees" value="DirectorsFees3" checked disabled>
+                                <label class="custom-control-label chkBox pointer" for="formCheck-ExemptReportableDirectorsFees">Reportable as W1 on Activity Statement</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success saveDirectorFee"><i class="fa fa-save" style="margin-right: 5px;"></i>Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-close" style="margin-right: 5px;"></i>Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" role="dialog" tabindex="-1" id="rateTypeListModel">
+        {{> ratetypelistpop}}
+    </div>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="addRateModel">
+        {{> addratetypepop}}
+    </div> 
+</template>
